@@ -4,7 +4,7 @@
   "description": "GraphQL API for Mercado app",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc && copyfiles -u 1 src/graphql/typedefs/*.graphql dist",
     "preserve": "npm run build",
     "serve": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -q dist/index.js\"",
     "prestart": "npm run build",
@@ -33,6 +33,7 @@
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.28.1",
     "cookie-parser": "^1.4.6",
+    "copyfiles": "^2.4.1",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",

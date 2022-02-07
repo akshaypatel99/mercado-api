@@ -1,0 +1,57 @@
+# Auth Directive
+directive @auth(requires: [Role] = [ADMIN]) on OBJECT | FIELD_DEFINITION
+
+# Types
+type Order implements Timestamps {
+	_id: ID!
+	user: User!
+	orderItems: [Product!]!
+	orderTotal: Float!
+	deliveryCost: Float!
+	totalCost: Float!
+	deliveryAddress: Address!
+	deliveryDate: Date!
+	paymentResult: PaymentResult
+	isPaid: Boolean!
+	paidAt: Date
+
+	# Interface required
+	createdAt: Date!
+	updatedAt: Date!
+}
+
+type Orders {
+	info: Info!
+	results: [Order]!
+}
+
+type PaymentResult {
+	id: String
+	status: String
+	updatedAt: String
+	emailAddress: String
+}
+
+type OrderResult {
+	message: String!
+	order: Order
+}
+
+input OrderInput {
+	orderItems: [ID]!
+	orderTotal: Float!
+	deliveryCost: Float!
+	totalCost: Float!
+	deliveryAddress: AddressInput!
+	deliveryDate: Date!
+	paymentResult: PaymentResultInput
+	isPaid: Boolean!
+	paidAt: Date
+}
+
+input PaymentResultInput {
+	id: String
+	status: String
+	updatedAt: String
+	emailAddress: String
+}

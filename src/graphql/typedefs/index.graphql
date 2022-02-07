@@ -1,0 +1,36 @@
+scalar Date
+scalar Upload
+
+type Query {
+	# Product
+	products(params: QueryParams): Products!
+	product(id: ID!): Product
+
+	# User
+	users(params: QueryParams): Users!
+	user(id: ID!): User
+
+	# Order
+	orders(params: QueryParams): Orders!
+	order(id: ID!): Order
+}
+
+type Mutation {
+	# Product
+	createProduct(input: ProductInput): ProductResult
+	updateProduct(id: ID!, input: ProductInput): ProductResult
+	deleteProduct(id: ID!): ProductDeleteResult
+	uploadPhoto(file: Upload!): UploadedFileResponse
+
+	# User
+	signup(input: SignupInput): AuthenticationResult
+	login(input: LoginInput): AuthenticationResult
+	logout: Boolean
+	updateUserRole(id: ID!, role: String!): UserUpdateResult
+	deleteUser(id: ID!): UserDeleteResult
+
+	# Order
+	createOrder(input: OrderInput): OrderResult
+	updateOrder(id: ID!, input: OrderInput): Order!
+	deleteOrder(id: ID!): String!
+}

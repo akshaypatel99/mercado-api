@@ -25,6 +25,8 @@ async function startApolloServer(schema) {
     credentials: true,
     origin: frontendProdURL,
     allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With', 'Accept', 'Origin', 'X-Signature'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    
   };
 
   app.use(cors(corsOptions))

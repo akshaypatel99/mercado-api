@@ -55,6 +55,7 @@ const tokenCookies = ({ accessToken, refreshToken }) => {
     Secure: process.env.NODE_ENV === "production",
     SameSite: 'None',
     domain: process.env.NODE_ENV === "production" ? frontendProdURL : frontendDevURL,
+    path: '/',
     maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week 
   };
 

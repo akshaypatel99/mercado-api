@@ -5,7 +5,7 @@ import { graphqlUploadExpress } from 'graphql-upload';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import validateTokensMiddleware from './middleware/validateTokens';
-import { port, frontendDevURL, frontendProdURL, apolloStudioURL, backendDevURL, backendProdURL } from './config/environment';
+import { port, frontendDevURL, frontendProdURL, apolloStudioURL } from './config/environment';
 import schema from './graphql/';
 import connectDB from './db';
 
@@ -23,7 +23,7 @@ async function startApolloServer(schema) {
 
   const corsOptions = {
     credentials: true,
-    origin: [process.env.DEVELOPMENT_URL, process.env.PRODUCTION_URL, process.env.APOLLO_STUDIO_URL]
+    origin: [frontendDevURL, frontendProdURL, apolloStudioURL]
   };
 
   app.use(cors(corsOptions))

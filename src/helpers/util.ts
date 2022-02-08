@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { jwtAccessSecret, jwtRefreshSecret } from '../config/environment';
+import { jwtAccessSecret, jwtRefreshSecret, frontendDevURL, frontendProdURL } from '../config/environment';
 import cloudinary from 'cloudinary';
 import { AuthenticationError } from 'apollo-server-express';
 import { UserInfo, UserData } from '../../types';
@@ -54,7 +54,7 @@ const tokenCookies = ({ accessToken, refreshToken }) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     SameSite: 'Lax',
-    domain: process.env.NODE_ENV === "production" ? process.env.PRODUCTION_URL : process.env.DEVELOPMENT_URL,
+    domain: process.env.NODE_ENV === "production" ? frontendProdURL : frontendDevURL,
     maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
   };
 

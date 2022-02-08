@@ -1,6 +1,7 @@
 import { setTokens, tokenCookies, validateAccessToken, validateRefreshToken } from "../helpers/util";
 import { User } from "../db/models";
 import { NextFunction, Request, Response } from "express";
+import { frontendProdURL } from "../config/environment";
 
 export default async function validateTokensMiddleware(req: Request, res: Response, next: NextFunction) {
   const refreshToken = req.cookies['refresh'];
@@ -29,13 +30,28 @@ export default async function validateTokensMiddleware(req: Request, res: Respon
     }
 
     // If refresh token is valid, set new tokens and continue
-    const userTokens = setTokens(user);
+    const { accessToken, refreshToken } = setTokens(user);
     req.user = decodedRefreshToken.user;
 
     // Update cookies with new tokens
-    const cookies = tokenCookies(userTokens);
-    res.cookie(...cookies.access);
-    res.cookie(...cookies.refresh);
+    // const cookies = tokenCookies(userTokens);
+
+    res.cookie('access', accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      domain: frontendProdURL,
+      path: '/',
+      maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week 
+    });
+    res.cookie('refresh', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      domain: frontendProdURL,
+      path: '/',
+      maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week 
+    });
 
     return next();
   }

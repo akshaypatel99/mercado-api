@@ -52,9 +52,9 @@ const validateRefreshToken = (token: string) => {
 const tokenCookies = ({ accessToken, refreshToken }) => {
   const cookieOptions = {
     httpOnly: true,
-    Secure: process.env.NODE_ENV === "production",
+    Secure: true,
     SameSite: 'None',
-    domain: process.env.NODE_ENV === "production" ? frontendProdURL : frontendDevURL,
+    domain: frontendProdURL,
     path: '/',
     maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week 
   };
